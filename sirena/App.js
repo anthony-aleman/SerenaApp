@@ -20,7 +20,7 @@ const Stack = createNativeStackNavigator();
 const StartScreen = ({navigation}) => {
   return (
     <View style={styles.container}>
-      <Text style={{fontSize: 40}}>Sirena</Text>
+      <Text style={{fontSize: 40, paddingTop: 40}}>Sirena</Text>
       <Button title="Sign Up"
               onPress={() => navigation.navigate('Sign Up')}/>
       <Button title="Sign In"
