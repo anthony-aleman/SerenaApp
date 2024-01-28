@@ -54,6 +54,8 @@ const ForgotPasswordScreen = ({navigation}) => {
                 value={email}
                 onChangeText={(text) => validateEmail(text)}/>
 
+            
+          </View>
             {/* Display error/validation icon*/}
             
             {error !== null && ( error ? 
@@ -66,8 +68,6 @@ const ForgotPasswordScreen = ({navigation}) => {
             {/* Error message */}
 
             {error ? <Text style={{ color: 'red' }}>{error}</Text> : null}
-          </View>
-
 
 
           <TouchableOpacity

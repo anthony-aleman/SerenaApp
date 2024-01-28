@@ -7,8 +7,11 @@ import {
     StyleSheet, 
     StatusBar
 } from "react-native"; 
+
+import validator from 'validator';
+
 const LoginScreen = ({navigation}) => {
-    
+
     const onPressLogin = () => {
       console.log('Login button pressed');
       console.log('email: ' + email);
@@ -18,7 +21,37 @@ const LoginScreen = ({navigation}) => {
   
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [emailError, setEmailError] = useState('');
+    const [passwordError, setPasswordError] = useState(null);
     const [loading, setLoading] = useState(false);
+
+    const validateEmail = (input) => {
+      setEmail(input);
+      // check if email is valid
+      if (!input) {
+        setEmailError('Email is required.');
+        return false;
+      } else if (validator.isEmail(input)) {
+        setEmailError('');
+      } else {
+        setEmailError('Email is invalid.');
+        return false;
+      }
+    };
+
+    const validatePassword = (input) => {
+      setPassword(input);
+      // check if password is valid
+      if (!input) {
+        setPasswordError('Password is required.');
+        return false;
+      } else if (input.length < 8) {
+        setPasswordError('Password must be at least 8 characters.');
+        return false;
+      } else {
+        setPasswordError('');
+      }
+    };
   
     return (
       <>
@@ -33,17 +66,54 @@ const LoginScreen = ({navigation}) => {
               style={styles.inputText}
               label="Email"
               placeholder="Username/Email"
-              onChangeText={text => setEmail(text)}
+              onChangeText={text => validateEmail(text)}
               />
+
+
   
   </View>
+  <View>
+  {/* Display error/validation icon*/}
+              
+  {emailError !== null && ( emailError ? 
+              
+              ( <Text style={styles.invalidMark}>✗</Text>) 
+              : 
+              ( <Text style={styles.validMark}>✓</Text>))}
+
+
+              {/* Error message */}
+
+              {emailError ? <Text style={{ color: 'red' }}>{emailError}</Text> : null}
+
+  </View>
+
+
   <View style={styles.inputView}>
             <TextInput 
             style={styles.inputText}
             placeholder="Password"
-            onChangeText={text => setPassword(text)}
+            onChangeText={text => validatePassword(text)}
             />
   </View>
+
+  <View>
+  {/* Display error/validation icon*/}
+              
+  {passwordError !== null && ( passwordError ? 
+              
+              ( <Text style={styles.invalidMark}>✗</Text>) 
+              : 
+              ( <Text style={styles.validMark}>✓</Text>))}
+
+
+              {/* Error message */}
+
+              {passwordError ? <Text style={{ color: 'red' }}>{passwordError}</Text> : null}
+
+  </View>
+
+          
   
   
         <TouchableOpacity
@@ -91,15 +161,15 @@ const LoginScreen = ({navigation}) => {
       width:"80%",
       backgroundColor:"#FFC0CB",
       borderRadius:25,
-      height:50,
-      marginBottom:20,
+      height:60,
+      marginBottom:25,
       justifyContent:"center",
-      padding:20
+      padding:27,
       },
 
       inputText:{
       height:50,
-      color:"white"
+      color:"white",
       },
 
       //Button styling
@@ -120,9 +190,23 @@ const LoginScreen = ({navigation}) => {
         height:50,
         alignItems:"center",
         justifyContent:"center",
-        marginTop:20,
-        marginBottom:20
+        marginTop:25,
+        marginBottom:25
       },
+
+      invalidMark:{
+        flex: 3,
+        color:"red",
+        fontSize: 20,
+        marginLeft: 5,
+      },
+
+    validMark:{
+      flex: 1,
+      flexDirection: 'row',
+        color:"green",
+        fontSize: 20,
+    },
     });
 
 export default LoginScreen;
