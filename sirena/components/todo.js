@@ -9,6 +9,8 @@ import {
     SafeAreaView
 } from "react-native"; 
 
+
+
 const ToDo = () => {
     const [task, setTask] = useState(""); 
     const [tasks, setTasks] = useState([]); 
@@ -85,6 +87,8 @@ const ToDo = () => {
                 renderItem={renderItem} 
                 keyExtractor={(item, index) => index.toString()} 
             /> 
+
+            
 
         </View>
     ); 

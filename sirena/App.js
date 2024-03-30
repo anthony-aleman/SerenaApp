@@ -14,33 +14,19 @@ import {
 } from "react-native"; 
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import ToDo from "./components/todo";
 import LoginScreen from "./components/login";
 import SignUpScreen from "./components/signUp";
 import ForgotPasswordScreen from "./components/forgotPassword";
+import ToDo from "./components/todo";
+import HomeScreen from "./components/home";
+import GoalsScreen from "./components/goals";
 const Stack = createNativeStackNavigator();
 
 
 
-// Navigation from home screen to goals screen not working
-const HomeScreen = ({navigation}) => {
-  return (
-    <View style={styles.homeScreen}> 
-    <Button title="Go to Goals"
-            onPress={() => navigation.navigate('Goals', {name: 'Sirena'})}/>
-      <ToDo/>
-    </View>
-  );
-};
 
-const GoalsScreen = ({navigation, route}) => {
-  return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Goals Screen</Text>
-      <Text>This is {route.params.name}'s profile</Text>
-    </View>
-  );
-};
+
+
   
 const App = () => { 
     return ( 

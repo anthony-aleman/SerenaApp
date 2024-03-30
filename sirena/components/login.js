@@ -15,7 +15,8 @@ const LoginScreen = ({navigation}) => {
     const onPressLogin = () => {
       console.log('Login button pressed');
       console.log('email: ' + email);
-      console.log('password: ' + password);    
+      console.log('password: ' + password);
+      navigation.navigate('Home');    
     };
   
   
@@ -68,50 +69,20 @@ const LoginScreen = ({navigation}) => {
               placeholder="Username/Email"
               onChangeText={text => validateEmail(text)}
               />
+          </View>
+          <View
+            style={styles.inputView}>
 
+            <TextInput
+              style={styles.inputText}
+              label="Password"
+              placeholder="Password"
+              onChangeText={text => validatePassword(text)}
+              />
+          </View>
+  
 
   
-  </View>
-  <View>
-  {/* Display error/validation icon*/}
-              
-  {emailError !== null && ( emailError ? 
-              
-              ( <Text style={styles.invalidMark}>✗</Text>) 
-              : 
-              ( <Text style={styles.validMark}>✓</Text>))}
-
-
-              {/* Error message */}
-
-              {emailError ? <Text style={{ color: 'red' }}>{emailError}</Text> : null}
-
-  </View>
-
-
-  <View style={styles.inputView}>
-            <TextInput 
-            style={styles.inputText}
-            placeholder="Password"
-            onChangeText={text => validatePassword(text)}
-            />
-  </View>
-
-  <View>
-  {/* Display error/validation icon*/}
-              
-  {passwordError !== null && ( passwordError ? 
-              
-              ( <Text style={styles.invalidMark}>✗</Text>) 
-              : 
-              ( <Text style={styles.validMark}>✓</Text>))}
-
-
-              {/* Error message */}
-
-              {passwordError ? <Text style={{ color: 'red' }}>{passwordError}</Text> : null}
-
-  </View>
 
           
   
