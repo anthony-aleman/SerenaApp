@@ -1,6 +1,5 @@
 import { View, Text, TouchableOpacity } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import HomeScreen from './home';
 import GoalsScreen from './goals';
 
 const Tab = createBottomTabNavigator();
