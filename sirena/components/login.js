@@ -5,7 +5,9 @@ import {
     TextInput, 
     TouchableOpacity, 
     StyleSheet, 
-    StatusBar
+    StatusBar,
+    ImageBackground,
+    Alert
 } from "react-native"; 
 
 import validator from 'validator';
@@ -16,6 +18,7 @@ const LoginScreen = ({navigation}) => {
       console.log('Login button pressed');
       console.log('email: ' + email);
       console.log('password: ' + password);
+      Alert.alert('Login Successful');
       navigation.navigate('Home');    
     };
   
@@ -56,7 +59,10 @@ const LoginScreen = ({navigation}) => {
   
     return (
       <>
-      <StatusBar barStyle="dark-content"/>
+      
+      <ImageBackground
+        source={require('../assets/background_prp.jpg')} style={{width: '100%', height: '100%'}} >
+      
         <View style={styles.container}>
         <Text style={styles.title}>Login Screen</Text>
           <View
@@ -67,6 +73,7 @@ const LoginScreen = ({navigation}) => {
               style={styles.inputText}
               label="Email"
               placeholder="Username/Email"
+              placeholderTextColor={"white"}
               onChangeText={text => validateEmail(text)}
               />
           </View>
@@ -77,6 +84,7 @@ const LoginScreen = ({navigation}) => {
               style={styles.inputText}
               label="Password"
               placeholder="Password"
+              placeholderTextColor={"white"}
               onChangeText={text => validatePassword(text)}
               />
           </View>
@@ -104,8 +112,7 @@ const LoginScreen = ({navigation}) => {
   
         </View>
       
-      
-      
+      </ImageBackground>
       </>
       
     );
@@ -116,7 +123,12 @@ const LoginScreen = ({navigation}) => {
 
   const styles = StyleSheet.create({ 
     container: {
-      flex: 1,
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+
       justifyContent: 'center',
       alignItems: 'center',
     },
@@ -130,7 +142,7 @@ const LoginScreen = ({navigation}) => {
 
     inputView:{
       width:"80%",
-      backgroundColor:"#FFC0CB",
+      backgroundColor:"#CA87FF",
       borderRadius:25,
       height:60,
       marginBottom:25,
@@ -141,22 +153,23 @@ const LoginScreen = ({navigation}) => {
       inputText:{
       height:50,
       color:"white",
+      fontSize:16
       },
 
       //Button styling
       forgotAndSignUpText:{
-        color:"gray",
-        fontSize:11
+        color:"black",
+        fontSize:16
       },
 
       loginText:{
-        color:"gray",
+        color:"white",
 
       },
 
       loginBtn:{
         width:"80%",
-        backgroundColor:"#fb5b5a",
+        backgroundColor:"#DE5FFF",
         borderRadius:25,
         height:50,
         alignItems:"center",
@@ -165,19 +178,7 @@ const LoginScreen = ({navigation}) => {
         marginBottom:25
       },
 
-      invalidMark:{
-        flex: 3,
-        color:"red",
-        fontSize: 20,
-        marginLeft: 5,
-      },
-
-    validMark:{
-      flex: 1,
-      flexDirection: 'row',
-        color:"green",
-        fontSize: 20,
-    },
+  
     });
 
 export default LoginScreen;
