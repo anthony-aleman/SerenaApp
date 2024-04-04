@@ -20,37 +20,22 @@ import ForgotPasswordScreen from "./components/forgotPassword";
 import ToDo from "./components/todo";
 import HomeScreen from "./components/home";
 import GoalsScreen from "./components/goals";
-const Stack = createNativeStackNavigator();
+import 'react-native-gesture-handler';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import LoginNav from "./components/loginNav";
 
-
-
-
-
+const Drawer = createDrawerNavigator();
 
   
 const App = () => { 
+    const [isLogged, setIsLogged] = useState(false);
     return ( 
         <View style={{flex: 1 }}>
-
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerShown: false,
-          }} >
-          <Stack.Screen name="Login" component={LoginScreen}/>
-          <Stack.Screen name="SignUp" component={SignUpScreen}/>
-          <Stack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen}/>
-          <Stack.Screen name="Home" component={HomeScreen}/>
-          <Stack.Screen name="Goals" component={GoalsScreen}/>
-        </Stack.Navigator>
-      </NavigationContainer>
+          <NavigationContainer>
+            {isLogged ? <LoggedNav/> : <LoginNav/>}
+          </NavigationContainer>
         </View>
       
-      
-        
-
-     
-        
     ); 
 }; 
 
