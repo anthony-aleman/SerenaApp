@@ -6,14 +6,13 @@ import {
     Button
 } from "react-native";
 
-const GoalsScreen = ({navigation, route}) => {
+const GoalsScreen = ({navigation}) => {
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text>Goals Screen</Text>
-        <Text>This is  profile</Text>
         <Button
           title="Go to Home"
-          onPress={() => navigation.goBack()} />
+          onPress={() => navigation.navigate('Home')} />
       </View>
     );
   
