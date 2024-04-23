@@ -1,6 +1,6 @@
 
 
-import React, { useState } from "react"; 
+import React, { useState, useEffect } from "react"; 
 import { 
     View, 
     Text, 
@@ -12,6 +12,7 @@ import {
     Button,
     StatusBar
 } from "react-native"; 
+import { supabase } from "./utils/supabase";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from "./components/login";
@@ -23,20 +24,36 @@ import GoalsScreen from "./components/goals";
 import 'react-native-gesture-handler';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import LoginNav from "./components/loginNav";
-
+import LoggedNav from "./components/loggedinNav";
 const Drawer = createDrawerNavigator();
 
   
 const App = () => { 
+
+    const [session, setSession] = useState(null);
     const [isLogged, setIsLogged] = useState(false);
+
+    useEffect(() => {
+      supabase.auth.getSession().then((  { data: { session } }) => {
+        setSession(session)
+      })
+
+      supabase.auth.onAuthStateChange((_event, session) => {
+        setSession(session)
+      })
+    }, [])
+
+
+
+
     return ( 
         <View style={{flex: 1 }}>
           <NavigationContainer>
-            {isLogged ? <LoggedNav/> : <LoginNav/>}
+            {session && session.user ? <LoggedNav key={session.user.id} session={session}/> : <LoginNav/>}
           </NavigationContainer>
         </View>
       
-    ); 
+    );                                
 }; 
 
 

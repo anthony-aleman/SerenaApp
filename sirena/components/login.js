@@ -7,10 +7,22 @@ import {
     StyleSheet, 
     StatusBar,
     ImageBackground,
-    Alert
+    Alert,
+    AppState
 } from "react-native"; 
 
+import { supabase } from "../utils/supabase";
+
+
 import validator from 'validator';
+
+AppState.addEventListener('change', (state) => {
+  if ( state == 'active') {
+    supabase.auth.startAutoRefresh()
+  } else {
+    supabase.auth.stopAutoRefresh()
+  }
+})
 
 const LoginScreen = ({navigation}) => {
 
@@ -28,6 +40,23 @@ const LoginScreen = ({navigation}) => {
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState(null);
     const [loading, setLoading] = useState(false);
+
+
+    async function signInWithPassword() {
+      setLoading(true);
+      const { error } = await supabase.auth.signInWithPassword({
+        email: email,
+        password: password,
+      })
+      
+      if (error) {
+        Alert.alert(error.message)
+      } setLoading(false)
+
+    }
+
+
+      
 
     const validateEmail = (input) => {
       setEmail(input);
@@ -74,6 +103,7 @@ const LoginScreen = ({navigation}) => {
               label="Email"
               placeholder="Username/Email"
               placeholderTextColor={"white"}
+              value={email}
               onChangeText={text => validateEmail(text)}
               />
           </View>
@@ -85,7 +115,9 @@ const LoginScreen = ({navigation}) => {
               label="Password"
               placeholder="Password"
               placeholderTextColor={"white"}
+              secureTextEntry={true}
               onChangeText={text => validatePassword(text)}
+              value={password}
               />
           </View>
   
@@ -100,7 +132,7 @@ const LoginScreen = ({navigation}) => {
           <Text style={styles.forgotAndSignUpText}>Forgot Password</Text>
           </TouchableOpacity>
         <TouchableOpacity
-            onPress={onPressLogin}
+            onPress={() => signInWithPassword()}
             style={styles.loginBtn}>
             <Text style={styles.loginText}>Login</Text>
           </TouchableOpacity>

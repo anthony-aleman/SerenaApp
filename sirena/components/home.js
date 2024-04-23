@@ -7,7 +7,7 @@ import {
 } from "react-native"; 
 import GoalsScreen from "./goals";
 import { createDrawerNavigator } from '@react-navigation/drawer';
-
+import { supabase } from "../utils/supabase";
 const Drawer = createDrawerNavigator();
 
 
@@ -15,9 +15,7 @@ function HomeApp({navigation}) {
     return (
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center' }}>
             <Text>Home Screen</Text>
-            <Button
-                title="Go to Goals"
-                onPress={() => navigation.navigate('Goals')} />
+            <Button title="Sign Out" onPress={() => supabase.auth.signOut()} />
         </View>
     );
 }
@@ -28,7 +26,7 @@ export default function HomeScreen({navigation}) {
         <>
             <Drawer.Navigator 
                           screenOptions={{headerShown: false }}>
-                <Drawer.Screen name="HomeApp" component={HomeApp}/>
+                <Drawer.Screen name="Home" component={HomeApp}/>
                 <Drawer.Screen name="Goals" component={GoalsScreen}/>
             </Drawer.Navigator>
         </>

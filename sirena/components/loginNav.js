@@ -15,8 +15,9 @@ export default function LoginNav({ navigation }) {
         >
             <Stack.Screen name="Login" component={LoginScreen} 
             options={{headerShown: false}}/>
-            <Stack.Screen name="SignUp" component={SignUpScreen} />
-            <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
+            <Stack.Screen name="SignUp" component={SignUpScreen} 
+            options={{headerShown: false}}/>
+            <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} options={{headerShown: false}}/>
             <Stack.Screen name="Home" component={HomeScreen} options={{headerShown: false}}/>
         </Stack.Navigator>
     )

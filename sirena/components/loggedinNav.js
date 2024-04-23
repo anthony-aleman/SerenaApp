@@ -1,6 +1,7 @@
 import HomeScreen from "./home";
+import { Session } from "@supabase/supabase-js";
 
-export default function LoginNav({ navigation }) {
+export default function LoginNav({navigation, session}) {
 
     return(
         <>

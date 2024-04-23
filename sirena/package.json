@@ -17,7 +17,7 @@
     "@react-navigation/native-stack": "^6.9.17",
     "@supabase/supabase-js": "^2.39.3",
     "aes-js": "^3.1.2",
-    "expo": "^50.0.14",
+    "expo": "^50.0.17",
     "expo-secure-store": "~12.8.1",
     "expo-status-bar": "~1.11.1",
     "expo-updates": "~0.24.12",
