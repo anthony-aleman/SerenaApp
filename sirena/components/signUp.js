@@ -4,20 +4,42 @@ import {
     Text, 
     TextInput, 
     TouchableOpacity, 
-    StyleSheet, 
+    StyleSheet,
+    Alert,
+    AppState
 } from "react-native";
+import { supabase } from "../utils/supabase";
+
+AppState.addEventListener('change', (state) => {
+  if ( state == 'active') {
+    supabase.auth.startAutoRefresh()
+  } else {
+    supabase.auth.stopAutoRefresh()
+  }
+})
 
 const SignUpScreen = ({navigation}) => {
 
-    const onPressSignUp = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  async function onPressSignUp() {
+    setLoading(true);
       console.log('Sign Up button pressed');
       console.log('Email: ' + email);
       console.log('Password: ' + password);
+      const { data, error } = await supabase.auth.signUp({
+        email: email,
+        password: password,
+      })
+
+      if (error) {
+        Alert.alert(error.message)
+      } setLoading(false)
     };
   
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-  
+    
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Sign up Screen</Text>
