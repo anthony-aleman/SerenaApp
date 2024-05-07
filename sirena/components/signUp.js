@@ -10,6 +10,9 @@ import {
 } from "react-native";
 import { supabase } from "../utils/supabase";
 
+
+// TODO: Setup custom SMTP server for email testing
+
 AppState.addEventListener('change', (state) => {
   if ( state == 'active') {
     supabase.auth.startAutoRefresh()
@@ -33,6 +36,8 @@ const SignUpScreen = ({navigation}) => {
         email: email,
         password: password,
       })
+
+      console.log(data);
 
       if (error) {
         Alert.alert(error.message)
