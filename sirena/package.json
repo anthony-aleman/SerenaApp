@@ -10,30 +10,30 @@
   },
   "dependencies": {
     "@expo/webpack-config": "^19.0.1",
-    "@react-native-async-storage/async-storage": "1.21.0",
+    "@react-native-async-storage/async-storage": "1.23.1",
     "@react-navigation/bottom-tabs": "^6.5.16",
     "@react-navigation/drawer": "^6.6.15",
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/native-stack": "^6.9.17",
     "@supabase/supabase-js": "^2.39.3",
     "aes-js": "^3.1.2",
-    "expo": "^50.0.17",
-    "expo-secure-store": "~12.8.1",
-    "expo-status-bar": "~1.11.1",
-    "expo-updates": "~0.24.12",
+    "expo": "^51.0.9",
+    "expo-secure-store": "~13.0.1",
+    "expo-status-bar": "~1.12.1",
+    "expo-updates": "~0.25.15",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-native": "0.73.6",
+    "react-native": "0.74.1",
     "react-native-elements": "^3.4.3",
-    "react-native-gesture-handler": "~2.14.0",
-    "react-native-get-random-values": "~1.8.0",
-    "react-native-reanimated": "~3.6.2",
+    "react-native-gesture-handler": "~2.16.1",
+    "react-native-get-random-values": "~1.11.0",
+    "react-native-reanimated": "~3.10.1",
     "react-native-url-polyfill": "^2.0.0",
     "react-native-web": "~0.19.6",
     "validator": "^13.11.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0"
+    "@babel/core": "^7.24.0"
   },
   "private": true
 }
