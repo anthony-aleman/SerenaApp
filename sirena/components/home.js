@@ -1,4 +1,4 @@
-import React, { useState } from "react"; 
+import React, { useState, useEffect } from "react"; 
 import { 
     View, 
     Text,
@@ -6,11 +6,12 @@ import {
     Button
 } from "react-native"; 
 import GoalsScreen from "./goals";
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createDrawerNavigator, createStackNavigator } from '@react-navigation/drawer';
 import { supabase } from "../utils/supabase";
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 const Drawer = createDrawerNavigator();
+const Stack = createStackNavigator();
 
 
 function HomeApp({navigation}) {
@@ -87,10 +88,87 @@ function YogaMeditation({navigation}) {
     );
 }
 
+function OnboardingScreen({navigation}) {
+    return (
+        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <Text>Onboarding Screen</Text>
+        </View>
+    );
+}
+
 
 export default function HomeScreen({navigation}) {
+
+
+    const [session, setSession] = useState(null);
+    const [isLogged, setIsLogged] = useState(false);
+    const [userData, setUserData] = useState(null);
+
+    useEffect(() => {
+      supabase.auth.getSession().then((  { data: { session } }) => {
+        setSession(session)
+      })
+
+      supabase.auth.onAuthStateChange((_event, session) => {
+        setSession(session)
+        if (session && session.user) {
+            fetchUserData(session.user.id);
+        }
+      })
+    }, [])
+
+    const fetchUserData = async (userID) => {
+        const {data, error} = await supabase
+        .from('public_users')
+        .select('has_completed_test')
+        .eq('user_id', userID)
+        .single();
+
+        if (error) {
+            console.log('Error fetching user data:', error.message);
+            return null;
+        }
+
+        if (data) {
+            setUserData(data);
+        }
+    };
+
     return (
         <>
+
+
+
+        { userData.has_completed_test ? (
+                <Drawer.Navigator 
+                initialRouteName="Home" 
+                        
+                          screenOptions={{
+                            drawerActiveTintColor: '#FB6F92',
+                                headerShown: false, 
+                                
+                                drawerStyle: {
+                                    backgroundColor: '#FFB3C6',
+                                    width: 200,
+                                    
+
+                                }}}>
+                <Drawer.Screen name="Home" component={HomeApp}/>
+                <Drawer.Screen name="Goal Tracker" component={GoalsScreen}/>
+                <Drawer.Screen name="Skill Tree" component={SkillTree}/>
+                <Drawer.Screen name="Mood Tracker" component={MoodTracker}/>
+                <Drawer.Screen name="DBT Help Sheets" component={DBTHelpSheets}/>
+                <Drawer.Screen name="Do-It Together" component={DoItTogether}/>
+                <Drawer.Screen name="Art" component={Art}/>
+                <Drawer.Screen name="Yoga/Meditation" component={YogaMeditation}/>
+            </Drawer.Navigator>
+            ) : (
+                <Stack.Navigator>
+                    <Stack.Screen name="Onboarding" component={OnboardingScreen}/>
+
+                </Stack.Navigator>
+            )}
+
             <Drawer.Navigator 
                 initialRouteName="Home" 
                         
