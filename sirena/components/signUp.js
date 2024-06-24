@@ -10,6 +10,8 @@ import {
 } from "react-native";
 import { supabase } from "../utils/supabase";
 
+import validator from 'validator';
+
 
 // TODO: Setup custom SMTP server for email testing
 
@@ -25,19 +27,51 @@ const SignUpScreen = ({navigation}) => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState(null);
   const [loading, setLoading] = useState(false);
+
+
+  const validateEmail = (input) => {
+    setEmail(input);
+    // check if email is valid
+    if (!input) {
+      setEmailError('Email is required.');
+      return false;
+    } else if (validator.isEmail(input)) {
+      setEmailError('');
+    } else {
+      setEmailError('Email is invalid.');
+      return false;
+    }
+  };
+
+  const validatePassword = (input) => {
+    setPassword(input);
+    // check if password is valid
+    if (!input) {
+      setPasswordError('Password is required.');
+      return false;
+    } else if (input.length < 8) {
+      setPasswordError('Password must be at least 8 characters.');
+      return false;
+    } else {
+      setPasswordError('');
+    }
+  };
 
   async function onPressSignUp() {
     setLoading(true);
       console.log('Sign Up button pressed');
       console.log('Email: ' + email);
       console.log('Password: ' + password);
-      const { data, error } = await supabase.auth.signUp({
-        email: email,
-        password: password,
-      })
+      
+    let { data, error } = await supabase.auth.signUp({
+      email: email,
+      password: password
+    });
 
-      console.log(data);
+
 
       if (error) {
         Alert.alert(error.message)
@@ -54,7 +88,8 @@ const SignUpScreen = ({navigation}) => {
           style={styles.inputText}
           label="Email"
           placeholder="Username/Email"
-          onChangeText={text => setEmail(text)}/>
+          value={email}
+          onChangeText={text => validateEmail(text)}/>
         </View>
   
         <View style={styles.inputView}>
@@ -62,7 +97,9 @@ const SignUpScreen = ({navigation}) => {
           style={styles.inputText}
           label="Password"
           placeholder="Password"
-          onChangeText={text => setPassword(text)}/>
+          value={password}
+          secureTextEntry={true}
+          onChangeText={text => validatePassword(text)}/>
         </View>
   
         <TouchableOpacity

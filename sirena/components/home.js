@@ -6,12 +6,13 @@ import {
     Button
 } from "react-native"; 
 import GoalsScreen from "./goals";
-import { createDrawerNavigator, createStackNavigator } from '@react-navigation/drawer';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { supabase } from "../utils/supabase";
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 const Drawer = createDrawerNavigator();
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 
 
 function HomeApp({navigation}) {
@@ -101,25 +102,30 @@ export default function HomeScreen({navigation}) {
 
 
     const [session, setSession] = useState(null);
-    const [isLogged, setIsLogged] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [userData, setUserData] = useState(null);
 
     useEffect(() => {
       supabase.auth.getSession().then((  { data: { session } }) => {
         setSession(session)
-      })
+        if (session && session.user) {
+            fetchUserData(session.user.id);
+        }
+      });
 
       supabase.auth.onAuthStateChange((_event, session) => {
         setSession(session)
         if (session && session.user) {
             fetchUserData(session.user.id);
+        } else {
+            setLoading(false);
         }
-      })
+      });
     }, [])
 
     const fetchUserData = async (userID) => {
         const {data, error} = await supabase
-        .from('public_users')
+        .from('public_user')
         .select('has_completed_test')
         .eq('user_id', userID)
         .single();
@@ -132,67 +138,74 @@ export default function HomeScreen({navigation}) {
         if (data) {
             setUserData(data);
         }
+
+        setLoading(false);
     };
 
-    return (
-        <>
+    /*if (loading) {
+        return (
+            <View style={{flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                <Text>Loading...</Text>
+            </View>
+        );
+    }*/
 
 
-
-        { userData.has_completed_test ? (
+    if (userData && userData.has_completed_test) {
+        return (
+           <>
                 <Drawer.Navigator 
-                initialRouteName="Home" 
-                        
-                          screenOptions={{
-                            drawerActiveTintColor: '#FB6F92',
-                                headerShown: false, 
+            initialRouteName="Home" 
+                    
+                      screenOptions={{
+                        drawerActiveTintColor: '#FB6F92',
+                            headerShown: false, 
+                            
+                            drawerStyle: {
+                                backgroundColor: '#FFB3C6',
+                                width: 200,
                                 
-                                drawerStyle: {
-                                    backgroundColor: '#FFB3C6',
-                                    width: 200,
-                                    
 
-                                }}}>
-                <Drawer.Screen name="Home" component={HomeApp}/>
-                <Drawer.Screen name="Goal Tracker" component={GoalsScreen}/>
-                <Drawer.Screen name="Skill Tree" component={SkillTree}/>
-                <Drawer.Screen name="Mood Tracker" component={MoodTracker}/>
-                <Drawer.Screen name="DBT Help Sheets" component={DBTHelpSheets}/>
-                <Drawer.Screen name="Do-It Together" component={DoItTogether}/>
-                <Drawer.Screen name="Art" component={Art}/>
-                <Drawer.Screen name="Yoga/Meditation" component={YogaMeditation}/>
-            </Drawer.Navigator>
-            ) : (
-                <Stack.Navigator>
-                    <Stack.Screen name="Onboarding" component={OnboardingScreen}/>
-
-                </Stack.Navigator>
-            )}
-
-            <Drawer.Navigator 
-                initialRouteName="Home" 
-                        
-                          screenOptions={{
-                            drawerActiveTintColor: '#FB6F92',
-                                headerShown: false, 
+                            }}}>
+            <Drawer.Screen name="Home" component={HomeApp}/>
+            <Drawer.Screen name="Goal Tracker" component={GoalsScreen}/>
+            <Drawer.Screen name="Skill Tree" component={SkillTree}/>
+            <Drawer.Screen name="Mood Tracker" component={MoodTracker}/>
+            <Drawer.Screen name="DBT Help Sheets" component={DBTHelpSheets}/>
+            <Drawer.Screen name="Do-It Together" component={DoItTogether}/>
+            <Drawer.Screen name="Art" component={Art}/>
+            <Drawer.Screen name="Yoga/Meditation" component={YogaMeditation}/>
+        </Drawer.Navigator>
+           </> 
+        );
+    } else {
+        return (
+            <>
+                <Drawer.Navigator 
+            initialRouteName="Home" 
+                    
+                      screenOptions={{
+                        drawerActiveTintColor: '#FB6F92',
+                            headerShown: false, 
+                            
+                            drawerStyle: {
+                                backgroundColor: '#FFB3C6',
+                                width: 200,
                                 
-                                drawerStyle: {
-                                    backgroundColor: '#FFB3C6',
-                                    width: 200,
-                                    
 
-                                }}}>
-                <Drawer.Screen name="Home" component={HomeApp}/>
-                <Drawer.Screen name="Goal Tracker" component={GoalsScreen}/>
-                <Drawer.Screen name="Skill Tree" component={SkillTree}/>
-                <Drawer.Screen name="Mood Tracker" component={MoodTracker}/>
-                <Drawer.Screen name="DBT Help Sheets" component={DBTHelpSheets}/>
-                <Drawer.Screen name="Do-It Together" component={DoItTogether}/>
-                <Drawer.Screen name="Art" component={Art}/>
-                <Drawer.Screen name="Yoga/Meditation" component={YogaMeditation}/>
-            </Drawer.Navigator>
-        </>
-        
-    );
-}
+                            }}}>
+            <Drawer.Screen name="Home" component={HomeApp}/>
+            <Drawer.Screen name="Goal Tracker" component={GoalsScreen}/>
+            <Drawer.Screen name="Skill Tree" component={SkillTree}/>
+            <Drawer.Screen name="Mood Tracker" component={MoodTracker}/>
+            <Drawer.Screen name="DBT Help Sheets" component={DBTHelpSheets}/>
+            <Drawer.Screen name="Do-It Together" component={DoItTogether}/>
+            <Drawer.Screen name="Art" component={Art}/>
+            <Drawer.Screen name="Yoga/Meditation" component={YogaMeditation}/>
+        </Drawer.Navigator>
+           </>
+        );
+    }
+};
+
 
