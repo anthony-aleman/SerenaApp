@@ -151,7 +151,7 @@ export default function HomeScreen({navigation}) {
     }*/
 
 
-    if (userData && userData.has_completed_test) {
+    if (true) {
         return (
            <>
                 <Drawer.Navigator 
@@ -178,34 +178,7 @@ export default function HomeScreen({navigation}) {
         </Drawer.Navigator>
            </> 
         );
-    } else {
-        return (
-            <>
-                <Drawer.Navigator 
-            initialRouteName="Home" 
-                    
-                      screenOptions={{
-                        drawerActiveTintColor: '#FB6F92',
-                            headerShown: false, 
-                            
-                            drawerStyle: {
-                                backgroundColor: '#FFB3C6',
-                                width: 200,
-                                
-
-                            }}}>
-            <Drawer.Screen name="Home" component={HomeApp}/>
-            <Drawer.Screen name="Goal Tracker" component={GoalsScreen}/>
-            <Drawer.Screen name="Skill Tree" component={SkillTree}/>
-            <Drawer.Screen name="Mood Tracker" component={MoodTracker}/>
-            <Drawer.Screen name="DBT Help Sheets" component={DBTHelpSheets}/>
-            <Drawer.Screen name="Do-It Together" component={DoItTogether}/>
-            <Drawer.Screen name="Art" component={Art}/>
-            <Drawer.Screen name="Yoga/Meditation" component={YogaMeditation}/>
-        </Drawer.Navigator>
-           </>
-        );
-    }
+    } 
 };
 
 

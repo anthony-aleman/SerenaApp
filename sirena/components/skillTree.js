@@ -5,10 +5,10 @@ import {
     StyleSheet,
 } from "react-native";
 
-export default function PersonalityTest({navigation}) {
+export default function SkillTree({navigation}) {
     return (
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text>Personality Test</Text>
+            <Text>Skill Tree</Text>
         </View>
     );
 };
