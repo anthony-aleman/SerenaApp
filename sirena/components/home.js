@@ -170,6 +170,7 @@ export default function HomeScreen({navigation}) {
             <Drawer.Screen name="Home" component={HomeApp}/>
             <Drawer.Screen name="Goal Tracker" component={GoalsScreen}/>
             <Drawer.Screen name="Skill Tree" component={SkillTree}/>
+            // Change mood tracker to mood journal
             <Drawer.Screen name="Mood Tracker" component={MoodTracker}/>
             <Drawer.Screen name="DBT Help Sheets" component={DBTHelpSheets}/>
             <Drawer.Screen name="Do-It Together" component={DoItTogether}/>
