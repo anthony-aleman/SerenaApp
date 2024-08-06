@@ -6,18 +6,28 @@
     -Character Customization, and 
     -skill tree assembly (maybe animation?)
 
+    8/6/2024
+    Next Steps:
+    
     
     
 */
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import PersonalityTest from "./personalitytest";
 import CharacterCreation from "./characterCreation";
 import SkillTree from "./skillTree";
+import { View, Text, Button } from 'react-native';
+import { supabase } from "../utils/supabase";
+
+
+const Stack = createNativeStackNavigator();
 
 
 const OnboardingScreen1 = () => {
     return (
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center' }}>
             <Text>Onboarding Screen</Text>
+            <Button title="Sign Out" onPress={() => supabase.auth.signOut()} />
         </View>
     )
 }

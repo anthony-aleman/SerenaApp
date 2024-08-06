@@ -9,7 +9,7 @@ import {
     AppState
 } from "react-native";
 import { supabase } from "../utils/supabase";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import validator from 'validator';
 
 
@@ -71,11 +71,13 @@ const SignUpScreen = ({navigation}) => {
       password: password
     });
 
+    await AsyncStorage.setItem('PersonalityTest', 'false');
+    await AsyncStorage.setItem('CustomizeCharacter', 'false');
+    await AsyncStorage.setItem('SkillTree', 'false');
 
-
-      if (error) {
+    if (error) {
         Alert.alert(error.message)
-      } setLoading(false)
+    } setLoading(false)
     };
   
     

@@ -101,20 +101,17 @@ function OnboardingScreen({navigation}) {
 export default function HomeScreen({navigation}) {
 
 
-    const [session, setSession] = useState(null);
     const [loading, setLoading] = useState(true);
     const [userData, setUserData] = useState(null);
 
     useEffect(() => {
       supabase.auth.getSession().then((  { data: { session } }) => {
-        setSession(session)
         if (session && session.user) {
             fetchUserData(session.user.id);
         }
       });
 
       supabase.auth.onAuthStateChange((_event, session) => {
-        setSession(session)
         if (session && session.user) {
             fetchUserData(session.user.id);
         } else {
@@ -170,7 +167,6 @@ export default function HomeScreen({navigation}) {
             <Drawer.Screen name="Home" component={HomeApp}/>
             <Drawer.Screen name="Goal Tracker" component={GoalsScreen}/>
             <Drawer.Screen name="Skill Tree" component={SkillTree}/>
-            // Change mood tracker to mood journal
             <Drawer.Screen name="Mood Tracker" component={MoodTracker}/>
             <Drawer.Screen name="DBT Help Sheets" component={DBTHelpSheets}/>
             <Drawer.Screen name="Do-It Together" component={DoItTogether}/>
