@@ -16,23 +16,24 @@
     "@react-navigation/native-stack": "^6.9.17",
     "@supabase/supabase-js": "^2.39.3",
     "aes-js": "^3.1.2",
-    "expo": "~51.0.24",
+    "expo": "^51.0.0",
     "expo-secure-store": "~13.0.2",
     "expo-status-bar": "~1.12.1",
-    "expo-updates": "~0.25.21",
+    "expo-updates": "~0.25.26",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-native": "0.74.3",
+    "react-native": "0.74.5",
     "react-native-elements": "^3.4.3",
     "react-native-gesture-handler": "~2.16.1",
     "react-native-get-random-values": "~1.11.0",
     "react-native-reanimated": "~3.10.1",
     "react-native-url-polyfill": "^2.0.0",
-    "react-native-web": "~0.19.6",
+    "react-native-web": "~0.19.10",
     "validator": "^13.11.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.24.0"
+    "@babel/core": "^7.24.0",
+    "metro": "~0.80.8"
   },
   "private": true
 }
